@@ -1,5 +1,6 @@
 import React from 'react';
-import { Layout, Menu,} from 'antd';
+import { history } from 'umi';
+import { Layout, Menu, loading } from 'antd';
 import {
   FileOutlined,
   TeamOutlined,
@@ -24,6 +25,21 @@ class SiderDemo extends React.Component {
     this.setState({ collapsed });
   };
 
+  // 跳转文件列表页面
+  toFiels = () => {
+    history.push('/files');
+  }
+
+  // 跳转到文件上传页面
+  toUpload = () => {
+    history.push('/upload');
+  }
+
+  // 跳转到校验页面
+  toDatacheck = () => {
+    history.push('/datacheck');
+  }
+
   render() {
     const { collapsed } = this.state;
     return (
@@ -36,13 +52,13 @@ class SiderDemo extends React.Component {
               <Menu.Item key="4">Bill</Menu.Item>
               <Menu.Item key="5">Alex</Menu.Item>
             </SubMenu>
-            <SubMenu key="sub2" icon={<TeamOutlined />} title="Team">
-              <Menu.Item key="6">Team 1</Menu.Item>
-              <Menu.Item key="8">Team 2</Menu.Item>
+            <SubMenu key="sub2" icon={<TeamOutlined />} title="DataCheck">
+              <Menu.Item key="6" onClick={this.toDatacheck}>Checking</Menu.Item>
+              {/* <Menu.Item key="8">Team 2</Menu.Item> */}
             </SubMenu>
-            <SubMenu key="sub3" icon={<FileOutlined />} title="文件">
-              <Menu.Item key="9">文件列表</Menu.Item>
-              <Menu.Item key="10">文件上传</Menu.Item>
+            <SubMenu key="sub3" icon={<FileOutlined />} title="FileSet">
+              <Menu.Item key="9" onClick={this.toFiels}>文件列表</Menu.Item>
+              <Menu.Item key="10" onClick={this.toUpload}>文件上传</Menu.Item>
             </SubMenu>
           </Menu>
         </Sider>

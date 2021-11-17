@@ -4,25 +4,36 @@ export default defineConfig({
   nodeModulesTransform: {
     type: 'none',
   },
-  // routes: [
-  //   { path: '/', component: '@/pages/index' },
-  // ],
   routes: [
-  
     {
       path: '/',
-      component: '@/layouts/index',
-      // redirect: '/upload',
+      redirect: '/login'
+    },
+    {
+      path: '/login',
+      component: '@/layouts/login.jsx',
+      routes: [
+        {
+          path: '/login',
+          component: '@/pages/Login'
+        }
+      ]
+    },
+    {
+      path: '/',
+      component: '@/layouts',
       routes: [
         { path: '/upload', component: '@/pages/Upload' },
         { path: '/files', component: '@/pages/Upload/Files' },
         { path: '/datacheck', component: '@/pages/DataCheck' },
-        { path: '/personal', component: '@/pages/User'},
-        { path: '/login', component:'@/pages/Login'},
-        { path: '/register', component: '@/pages/Register'}
+        { path: '/personal', component: '@/pages/User' },
+        { path: '/register', component: '@/pages/Register' },
+        { path: '/test', component: '@/pages/test' },
 
       ]
-    }, 
+    }
   ],
+
+
   fastRefresh: {},
 });

@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import { history } from 'umi';
 import { Row, Col, Avatar, Menu, Dropdown, Tag } from 'antd';
 import { UserOutlined,DownOutlined } from '@ant-design/icons';
 import './HeaderCom.less';
@@ -9,15 +10,21 @@ export default class HeaderCom extends Component {
     e.preventDefault();
     console.log('Clicked! But prevent default.');
   }
+  toPersonal = () => {
+    history.push('/personal');
+  }
+  logOut = () => {
+    history.push('/login');
+  }
   render() {
     
     const menu = (
       <Menu className='nickitem'>
         <Menu.Item key="0">
-          <a href="#">个人中心</a>
+          <a onClick={this.toPersonal}>个人中心</a>
         </Menu.Item>
         <Menu.Item key="1">
-          <a href="#">退出登录</a>
+          <a onClick={this.logOut}>退出登录</a>
         </Menu.Item>
       </Menu>
     );
