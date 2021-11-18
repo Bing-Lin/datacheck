@@ -106,9 +106,7 @@ class Excel extends Component {
       </div >
 
     );
-
   }
-
 }
 
 export default Excel;

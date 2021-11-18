@@ -3,7 +3,21 @@ import { Checkbox, Row, Col, Button } from 'antd';
 
 import './index.less';
 
-export default class index extends Component {
+export default class Conditions extends Component {
+  state = {
+    newColums: [],        // 存放新构建列表头数据
+    oldColumns: [],       // 存放来自 props 得表头数据
+    exportColumns: [],    // 导出数据表表头
+    fileName: '',         // 导出的文件名
+  }
+
+  // 选择校验条件
+  onChange = (checkedValues) => {
+    //  需要将筛选添加数据传递给父组件
+    // console.log('checkedValues', checkedValues);
+
+    this.props.getConditions(checkedValues);
+  }
 
   // 数据表导出
   exportExcel = (headers, data, fileName = '请假记录表.xlsx') => {
@@ -43,27 +57,27 @@ export default class index extends Component {
     // 导出 Excel
     XLSX.writeFile(wb, fileName);
   }
- onChange = (checkedValues) => {
-    // console.log('checked = ', checkedValues);
-  }
+
+
   render() {
+    console.log('条件筛选组件的props', this.props.columns);
     return (
       <>
         <Checkbox.Group style={{ width: '200%' }} onChange={this.onChange}>
           <Row>
             <Col span={2}>
-              <Checkbox value="A">条件A</Checkbox>
+              <Checkbox value="R8">受教育程度</Checkbox>
             </Col>
             <Col span={2}>
-              <Checkbox value="B">条件B</Checkbox>
+              <Checkbox value="R15">住房改善情况</Checkbox>
             </Col>
             <Col span={2}>
-              <Checkbox value="C">条件C</Checkbox>
+              <Checkbox value="R21">过去一年享受的服务情况</Checkbox>
             </Col>
             <Col span={2}>
-              <Checkbox value="D">条件D</Checkbox>
+              <Checkbox value="R22">目前享受的服务情况</Checkbox>
             </Col>
-            <Col span={2}>
+            {/* <Col span={2}>
               <Checkbox value="E">条件E</Checkbox>
             </Col>
             <Col span={2}>
@@ -76,15 +90,15 @@ export default class index extends Component {
               <Checkbox value="H">条件H</Checkbox>
             </Col>
             <Col span={2}>
-              <Checkbox value="I">条件I</Checkbox>
+              <Checkbox value="I">I</Checkbox>
             </Col>
             <Col span={2}>
               <Checkbox value="J">条件J</Checkbox>
-            </Col>
+            </Col> */}
           </Row>
         </Checkbox.Group>
         <div className="export" >
-          <Button className='btn'>导出</Button>
+          <Button className='btn' onClick={this.exportExcel}>导出</Button>
         </div>
       </>
     )
