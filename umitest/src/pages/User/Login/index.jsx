@@ -3,7 +3,7 @@ import React, { Component } from 'react'
 import { history } from 'umi';
 import { Form, Input, Button, Checkbox, message as Message } from 'antd';
 import { UserOutlined, LockOutlined } from '@ant-design/icons';
-import { getUserInfo } from '../../../services/login.js';
+// import { getUserInfo } from '../../../../services/login.js';
 
 import './index.less';
 // const { getFiledValue } = Form;
@@ -23,9 +23,9 @@ export default class Login extends Component {
   }
   toPage = async () => {
     // 获取用户信息
-    const userInfo = await getUserInfo();
-    console.log(userInfo);
-    history.push('/upload');
+    // const userInfo = await getUserInfo();
+    // console.log(userInfo);
+    history.push('/filemanager/upload');
   }
   render() {
     return (
@@ -33,7 +33,7 @@ export default class Login extends Component {
         <div className="logincontainer">
           <div className="loginleft">
             <div className="image">
-              <img src={require('../../asserts/images/login.png')} alt="介绍图片" />
+              <img src={require('../../../asserts/images/login.png')} alt="介绍图片" />
             </div>
           </div>
           <div className="loginright">
@@ -48,18 +48,18 @@ export default class Login extends Component {
               >
                 <Form.Item
                   name="username"
-                  rules={[{ required: true, message: 'Please input your Username!' }]}
+                  rules={[{ required: true, message: '请输入账号!' }]}
                 >
-                  <Input prefix={<UserOutlined className="site-form-item-icon" />} placeholder="Username" />
+                  <Input prefix={<UserOutlined className="site-form-item-icon" />} placeholder="登录账号" />
                 </Form.Item>
                 <Form.Item
                   name="password"
-                  rules={[{ required: true, message: 'Please input your Password!' }]}
+                  rules={[{ required: true, message: '请输入密码' }]}
                 >
                   <Input
                     prefix={<LockOutlined className="site-form-item-icon" />}
                     type="password"
-                    placeholder="Password"
+                    placeholder="登录密码"
                   />
                 </Form.Item>
 
@@ -67,7 +67,6 @@ export default class Login extends Component {
                   <Button type="primary" htmlType="submit" className="login-form-button" onClick={this.toPage}>
                     Log in
                   </Button>
-                  Or <a href="">register now!</a>
                 </Form.Item>
               </Form>
             </div>

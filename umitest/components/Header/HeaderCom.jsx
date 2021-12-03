@@ -11,7 +11,7 @@ export default class HeaderCom extends Component {
     console.log('Clicked! But prevent default.');
   }
   toPersonal = () => {
-    history.push('/personal');
+    history.push('/user/personal');
   }
   logOut = () => {
     history.push('/login');
@@ -33,14 +33,14 @@ export default class HeaderCom extends Component {
          <Row>
            {/* 导航栏相关 */}
             <Col span={19} >
-              <div className="navlist">
+              {/* <div className="navlist">
                 <Tag closable className="navitem" >
                   Tag 2
                 </Tag>
                 <Tag closable className="navitem" onClose={this.preventDefault}>
                   Prevent Default
                 </Tag>
-              </div>
+              </div> */}
             </Col>
             {/* 用户信息相关 */}
             <Col span={5} align='center'>

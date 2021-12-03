@@ -1,22 +1,68 @@
 import React, { Component } from 'react'
-import { Checkbox, Row, Col, Button } from 'antd';
+import { Checkbox, Row, Col, Button, message, Modal,Result } from 'antd';
+import $ from 'jquery';
 
 import './index.less';
 
 export default class Conditions extends Component {
   state = {
-    newColums: [],        // 存放新构建列表头数据
-    oldColumns: [],       // 存放来自 props 得表头数据
-    exportColumns: [],    // 导出数据表表头
-    fileName: '',         // 导出的文件名
+    newColums: [],                              // 存放新构建列表头数据
+    oldColumns: [],                             // 存放来自 props 得表头数据
+    exportColumns: [...this.props.columns],     // 导出数据表表头
+    fileName: '',                               // 导出的文件名
+    showModal: false
   }
 
-  // 选择校验条件
-  onChange = (checkedValues) => {
-    //  需要将筛选添加数据传递给父组件
-    // console.log('checkedValues', checkedValues);
+  toCheck = () => {
+    // let list = ["1", "2", "3", "4", "5", "6", "7", "8"]
+    // let data = [];
+    // // const { pageNum, pageSize } = params ? params : { pageNum: 1, pageSize: 20 };
+    // const xhr = new XMLHttpRequest()
 
-    this.props.getConditions(checkedValues);
+    // xhr.open("POST", `http://39.108.49.176:7321/check`, true)
+
+    // // 如果想要使用post提交数据,必须添加此行
+    // xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+
+    // // 将数据通过send方法传递
+    // xhr.send('list:["1","2","3","4","5","6","7","8"]');
+    // xhr.onreadystatechange = () => {
+    //   // console.log("ee");
+    //   if (xhr.readyState == 4 && xhr.status == 200) {
+    //     console.log(xhr.responseText);
+    //   }
+    // }
+    // $.ajax({
+    //   type: "post",
+    //   url: "http://39.108.49.176:7321/check",
+
+    //   data: JSON.stringify(["1", "2", "3", "4", "5", "6", "7", "8"]),
+    //   dataType: "json",
+    //   success: (e) => {
+    //     console.log(e);
+    //   }
+    // })
+    let list = ["1", "2", "3", "4", "5", "6", "7", "8"];
+    $.ajax({
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      type: "post",
+      url: "http://39.108.49.176:7321/check",
+      data: JSON.stringify(list),
+      success: (e) => {
+        console.log(e);
+        setTimeout(()=>{
+          this.setState({
+            showModal: true
+          })
+        }, 300)
+      },
+      error: (error) => {
+        message.error(error);
+      }
+    })
+
   }
 
   // 数据表导出
@@ -53,53 +99,43 @@ export default class Conditions extends Component {
         ),
       },
     };
-
     // 导出 Excel
     XLSX.writeFile(wb, fileName);
   }
 
+  handleOk = () => {
+    setIsModalVisible(false);
+  };
+
+  handleCancel = () => {
+    this.setState({
+      showModal: false
+    })
+  };
+
 
   render() {
-    console.log('条件筛选组件的props', this.props.columns);
+    const { showModal } = this.state;
     return (
       <>
-        <Checkbox.Group style={{ width: '200%' }} onChange={this.onChange}>
-          <Row>
-            <Col span={2}>
-              <Checkbox value="R8">受教育程度</Checkbox>
-            </Col>
-            <Col span={2}>
-              <Checkbox value="R15">住房改善情况</Checkbox>
-            </Col>
-            <Col span={2}>
-              <Checkbox value="R21">过去一年享受的服务情况</Checkbox>
-            </Col>
-            <Col span={2}>
-              <Checkbox value="R22">目前享受的服务情况</Checkbox>
-            </Col>
-            {/* <Col span={2}>
-              <Checkbox value="E">条件E</Checkbox>
-            </Col>
-            <Col span={2}>
-              <Checkbox value="F">条件F</Checkbox>
-            </Col>
-            <Col span={2}>
-              <Checkbox value="G">条件G</Checkbox>
-            </Col>
-            <Col span={2}>
-              <Checkbox value="H">条件H</Checkbox>
-            </Col>
-            <Col span={2}>
-              <Checkbox value="I">I</Checkbox>
-            </Col>
-            <Col span={2}>
-              <Checkbox value="J">条件J</Checkbox>
-            </Col> */}
-          </Row>
-        </Checkbox.Group>
-        <div className="export" >
-          <Button className='btn' onClick={this.exportExcel}>导出</Button>
-        </div>
+        <Button
+          type="primary"
+          className='checkbtn'
+          onClick={this.toCheck}
+        >一键校验
+        </Button>
+        <Modal 
+          visible={showModal}
+          // onOk={this.handleOk} 
+          onCancel={this.handleCancel}
+          footer={null}
+          >
+          <Result
+            status="success"
+            title="校验成功"
+            subTitle="请前往--校验结果--页面查看详情"
+          />
+        </Modal>
       </>
     )
   }

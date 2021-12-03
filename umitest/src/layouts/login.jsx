@@ -10,7 +10,7 @@ export default class login extends Component {
 
   render() {
     // 判断是否处于登录页面
-    if (this.props.location.pathname === '/login') {
+    if (this.props.location.pathname === '/user/login') {
       return (
         <>
           <div className="loginbox">
